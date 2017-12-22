@@ -1,0 +1,21 @@
+/deep/ #tabs {
+    margin-top: 60px;
+    background-color: green;
+}
+/deep/ form {
+    margin: 10px;
+    width: 50%;
+}
+/deep/ .form {
+    padding: 20% 0;
+    text-align: center;
+}
+/deep/ #progress-button {
+    margin-bottom: 20px;
+}
+/deep/ #progress-bar-status {
+    display: inline-block;
+}
+/deep/ .complete .dx-progressbar-range {
+    background-color: green;
+}

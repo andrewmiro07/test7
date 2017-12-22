@@ -1,0 +1,116 @@
+.tab{
+    display:inline-block;
+    height: 50px;
+    width: 150px;
+    background-color: #fff;
+    position: relative;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+  }
+  .tab:before {
+    content: "";
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    width: 0px;
+    height: 0px;
+    border-top: 25px solid #fff;
+    border-left: 25px solid transparent;
+  }
+  .tab:before {
+    content: "";
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    width: 0px;
+    height: 0px;
+    border-bottom: 25px solid #fff;
+    border-left: 25px solid transparent;
+  }
+  .tab:after {
+    content: "";
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 0px;
+    height: 0px;
+    border-bottom: 25px solid transparent;
+    border-left: 25px solid #fff;
+  }
+  .tab:after {
+    content: "";
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 0px;
+    height: 0px;
+    border-top: 25px solid transparent;
+    border-left: 25px solid #fff;
+  }
+.tab-selected {
+  background-color: #00BB9A !important;
+}
+.tab_b{
+  display:inline-block;
+  height: 50px;
+  width: 150px;
+  background-color: #fff;
+  position: relative;
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #222;
+  border-left: 1px solid #222;
+}
+  .tab_b:before {
+    content: "";
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    width: 0px;
+    height: 0px;
+    border-top: 25px solid #fff;
+    border-left: 25px solid transparent;
+  }
+  .tab_b:before {
+    content: "";
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    width: 0px;
+    height: 0px;
+    border-bottom: 25px solid #fff;
+    border-left: 25px solid transparent;
+  }
+.tab_e{
+    display:inline-block;
+    height: 50px;
+    width: 150px;
+    background-color: #fff;
+    position: relative;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+    border-right: 1px solid #222;
+  }
+  .tab_e:before {
+    content: "";
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 0px;
+    height: 0px;
+    border-bottom: 25px solid transparent;
+    border-left: 25px solid #fff;
+  }
+  .tab_e:before {
+    content: "";
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 0px;
+    height: 0px;
+    border-top: 25px solid transparent;
+    border-left: 25px solid #fff;
+  }
+  .tab_enable{
+    pointer-events: none;
+    background-color: #AAA;
+  }
