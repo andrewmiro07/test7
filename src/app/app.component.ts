@@ -1,7 +1,7 @@
 import { NgModule, Component, enableProdMode, OnInit, ViewChild, Pipe, PipeTransform } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { DataService, MenuSections, Tab, Customerz } from './data.service';
+import { DataService, MenuSections, User, Employee, Address } from './data.service';
 import { DxDataGridModule, DxTabsModule, DxSelectBoxModule, DxCheckBoxModule, DxNumberBoxModule, DxButtonModule, DxFormModule, DxFormComponent, DxProgressBarModule } from 'devextreme-angular';
 import notify from 'devextreme/ui/notify';
 
@@ -23,7 +23,7 @@ if (!/localhost/.test(document.location.host)) {
 })
 
 @NgModule({
-  imports: [BrowserModule, DxDataGridModule, DxTabsModule, DxSelectBoxModule, DxCheckBoxModule, DxNumberBoxModule, DxButtonModule, DxFormModule, DxFormComponent, DxProgressBarModule],
+  imports: [BrowserModule, DxDataGridModule, DxSelectBoxModule, DxCheckBoxModule, DxNumberBoxModule, DxButtonModule, DxFormModule, DxFormComponent, DxProgressBarModule],
   declarations: [AppComponent, TimePipe],
   bootstrap: [AppComponent]
 })
@@ -33,11 +33,10 @@ export class AppComponent implements OnInit {
   title = 'app';
   _counter: number;
   someProperty = '';
-  textValue: string = '0';
+  act_tabIndex: string = '0';
   num_tmp: number = 0;
   sections: MenuSections[];
   customers: any[];
-  tabs: Tab[];
   tabContent: string;
   tabId: number = 0;
   tbbClass: string = '';
@@ -46,7 +45,9 @@ export class AppComponent implements OnInit {
     mode: "password",
     value: this.password
   };
-  customer: Customerz;
+  user: User;
+  employee: Employee;
+  address: Address;
   countries: string[];
   maxDate: Date = new Date();
   cityPattern = "^[^0-9]+$";
@@ -62,27 +63,25 @@ export class AppComponent implements OnInit {
   intervalId: number;
 
   constructor(private dataService: DataService) {
-    this.tabs = dataService.getTabs();
-    this.tabContent = this.tabs[0].content;
     this.customers = this.dataService.getCustomers();
     this.maxDate = new Date(this.maxDate.setFullYear(this.maxDate.getFullYear() - 21));
     this.countries = dataService.getCountries();
-    this.customer = dataService.getCustomer();
+    this.user = dataService.getUser();
+    this.employee = dataService.getEmployee();
+    this.address = dataService.getAddress();
   }
 
-  selectTab(e) {
-    // this.tabContent = this.tabs[e.itemIndex].content;
-    this.tabId = this.tabs[e.itemIndex].id;
-    this.textValue = this.tabId.toString();
-  }
+setCounter(num: number) {
+  this.settabclass(this.num_tmp);
+  this.settabclass(num);
+  this.sections[num].tab_class += " tab-selected";
+  this.num_tmp = num;
+  this.act_tabIndex = num.toString();
+}
 
-  setCounter(num: number) {
-    this.settabclass(this.num_tmp);
-    this.settabclass(num);
-    this.sections[num].tab_class += " tab-selected";
-    this.num_tmp = num;
-    this.textValue = num.toString();
-  }
+enableTab(){
+  this.sections[parseInt(this.act_tabIndex) + 1].tab_class = this.sections[parseInt(this.act_tabIndex) + 1].tab_class.replace("tab_disable", "");
+}
 
 settabclass(num: number){
   switch(num){
@@ -103,8 +102,22 @@ settabclass(num: number){
 
   ngOnInit() {
     this.sections = this.dataService.getSections();
-    this.sections[0].tab_class = "tab-selected tab_b";
-    this.sections[this.sections.length - 1].tab_class = "tab_e tab_enable";
+    for (let i in this.sections){
+      switch(parseInt(i)){
+        case 0:{
+          this.sections[i].tab_class = "tab-selected tab_b";
+          break;
+        }
+        case this.sections.length - 1:{
+          this.sections[i].tab_class = "tab_e tab_disable";
+          break;
+        }
+        default:{
+          this.sections[i].tab_class = "tab tab_disable";
+          break;
+        }
+      }
+    } 
   }
 
   passwordComparison = () => {
@@ -123,7 +136,9 @@ settabclass(num: number){
         at: "center top"
       }
     }, "success", 3000);
-
+    if (parseInt(this.act_tabIndex) != this.sections.length - 1){
+      this.sections[parseInt(this.act_tabIndex) + 1].tab_class = this.sections[parseInt(this.act_tabIndex) + 1].tab_class.replace("tab_disable", "");
+    }
     e.preventDefault();
   }
 
@@ -137,7 +152,6 @@ settabclass(num: number){
       if (this.seconds === 0) {
         this.seconds = 10;
       }
-
       this.intervalId = window.setInterval(() => this.timer(), 1000);
     }
     this.inProgress = !this.inProgress;

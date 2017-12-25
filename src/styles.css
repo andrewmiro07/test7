@@ -110,7 +110,7 @@
     border-top: 25px solid transparent;
     border-left: 25px solid #fff;
   }
-  .tab_enable{
+  .tab_disable{
     pointer-events: none;
-    background-color: #AAA;
+    background-color: #EEE;
   }

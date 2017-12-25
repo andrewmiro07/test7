@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class DataService {
-  menuTabs: MenuSections[] = [new MenuSections('START', 0, 'tab'),
-  new MenuSections('FORM', 1, 'tab'),
-  new MenuSections('GRID', 2, 'tab')];
+  menuTabs: MenuSections[] = [new MenuSections('Credentials', 0, 'tab'),
+  new MenuSections('Personal Data', 1, 'tab'),
+  new MenuSections('Billing address', 2, 'tab')];
 
   constructor() { }
 
@@ -16,12 +16,16 @@ export class DataService {
     return customers;
   }
 
-  getTabs(): Tab[] {
-    return tabs;
+  getUser(): User {
+    return user;
   }
 
-  getCustomer(): Customerz {
-    return customer;
+  getEmployee(): Employee {
+    return employee;
+  }
+
+  getAddress(): Address {
+    return address;
   }
 
   getCountries() {
@@ -52,24 +56,24 @@ export class Customer {
   Website: string;
 }
 
-export class Customerz {
+export class User {
   Login: string;
   Password: string;
+  Accepted: boolean;
+}
+
+export class Employee {
   Name: string;
   Date: Date;
+  Accepted: boolean;
+}
+
+export class Address {
   Country: string;
   City: string;
   Address: string;
   Phone: string;
   Accepted: boolean;
-}
-
-export class Tab {
-  id: number;
-  text: string;
-  // icon: string;
-  content: string;
-  class: string;
 }
 
 let customers: Customer[] = [{
@@ -194,41 +198,25 @@ let customers: Customer[] = [{
   "Website": "http://www.nowebsitescreenshop.com"
 }];
 
-let tabs: Tab[] = [
-  {
-    id: 0,
-    text: "user",
-    // icon: "user",
-    content: "User Content",
-    class: "tab_b"
-  },
-  {
-    id: 1,
-    text: "Form",
-    // icon: "comment",
-    content: "Comment Content",
-    class: "tab_m"
-  },
-  {
-    id: 2,
-    text: "DataGrid",
-    // icon: "find",
-    content: "Find Content",
-    class: "tab_e"
-  }
-];
-
-let customer: Customerz = {
+let user: User = {
   "Login": "",
   "Password": "",
+  "Accepted": false
+};
+
+let employee: Employee = {
   "Name": "Peter",
   "Date": null,
+  "Accepted": false
+}
+
+let address: Address = {
   "Country": "",
   "City": "",
   "Address": "",
   "Phone": "",
   "Accepted": false
-};
+}
 
 let countries: string[] = [
   'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'The   Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burma', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Cape Verde', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Democratic Republic of the Congo', 'Republic of the Congo', 'Costa Rica', 'Ivory Coast', 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'East Timor', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'The Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Republic of Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'North Korea', 'South Korea', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Republic of Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico', 'Federated States of Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Namibia', 'Nauru', 'Nepal', 'Kingdom of the Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Norway', 'Oman', 'Pakistan', 'Palau', 'State of Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino', 'São Tomé and Príncipe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'];
