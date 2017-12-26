@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
 export class DataService {
   menuTabs: MenuSections[] = [new MenuSections('Credentials', 0, 'tab'),
   new MenuSections('Personal Data', 1, 'tab'),
-  new MenuSections('Billing address', 2, 'tab')];
+  new MenuSections('Billing address', 2, 'tab'),
+  new MenuSections('Users', 3, 'tab')];
 
   constructor() { }
 

@@ -41,10 +41,7 @@ export class AppComponent implements OnInit {
   tabId: number = 0;
   tbbClass: string = '';
   password = "";
-  passwordOptions: any = {
-    mode: "password",
-    value: this.password
-  };
+  passwordOptions: any = {mode: "password", value: this.password};
   user: User;
   employee: Employee;
   address: Address;
@@ -53,9 +50,7 @@ export class AppComponent implements OnInit {
   cityPattern = "^[^0-9]+$";
   namePattern: any = /^[^0-9]+$/;
   phonePattern: any = /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/;
-  phoneRules: any = {
-    X: /[02-9]/
-  }
+  phoneRules: any = {X: /[02-9]/}
   buttonText = "Start progress";
   inProgress = false;
   seconds = 10;
@@ -129,17 +124,20 @@ settabclass(num: number){
   }
 
   onFormSubmit = function (e) {
+    if (parseInt(this.act_tabIndex) == 2){
     notify({
       message: "You have submitted the form",
       position: {
-        my: "center top",
-        at: "center top"
+        my: "left botton",
+        at: "left botton"
       }
-    }, "success", 3000);
+    }, "success", 1000);
+  }
     if (parseInt(this.act_tabIndex) != this.sections.length - 1){
       this.sections[parseInt(this.act_tabIndex) + 1].tab_class = this.sections[parseInt(this.act_tabIndex) + 1].tab_class.replace("tab_disable", "");
     }
     e.preventDefault();
+    this.setCounter(parseInt(this.act_tabIndex) + 1);
   }
 
   onButtonClick() {

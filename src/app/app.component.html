@@ -1,14 +1,16 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class ="triangle_tr"></div>
 <div align="center" class="border: 1px solid #111">
-  <div style="display: inline" *ngFor='let tab of sections'>
-    <div id={{tab.tab_id}} class={{tab.tab_class}} (click)="setCounter(tab.tab_id)"><div style="margin: 15px;">{{tab.tab_name}}</div></div>
-  </div>
+  <div style="display: inline" *ngFor='let tab of sections'><!-- 
+  --><div id={{tab.tab_id}} class={{tab.tab_class}} (click)="setCounter(tab.tab_id)">
+        <div style="margin: 15px;">{{tab.tab_name}}</div>
+    </div><!-- 
+--></div>
 </div>
 <br>
 <br>
-<!--dx-data-grid *ngIf="2==textValue" id="gridContainer" [dataSource]="customers" [columns]="['CompanyName', 'City', 'State', 'Phone', 'Fax']">
-</dx-data-grid-->
+<dx-data-grid *ngIf="3==act_tabIndex" id="gridContainer" [dataSource]="customers" [columns]="['CompanyName', 'City', 'State', 'Phone', 'Fax']">
+</dx-data-grid>
 
 <form *ngIf="0==act_tabIndex" action="your-action" (submit)="onFormSubmit($event)">
   <dx-form id="form" [formData]="user" [readOnly]="false" [showColonAfterLabel]="true" [showValidationSummary]="true" validationGroup="customerData">
@@ -90,7 +92,7 @@
             </dxi-validation-rule>
           </dxi-item>
         </dxi-item>
-        <!--dxi-item itemType="simple" dataField="Accepted" editorType="dxCheckBox" [editorOptions]="{ 
+        <dxi-item itemType="simple" dataField="Accepted" editorType="dxCheckBox" [editorOptions]="{ 
                   text: 'I agree to the Terms and Conditions',
                   value: false
               }">
@@ -98,7 +100,7 @@
           </dxo-label>
           <dxi-validation-rule type="compare" [comparisonTarget]="checkComparison" message="You must agree to the Terms and Conditions">
           </dxi-validation-rule>
-        </dxi-item-->
+        </dxi-item>
       </dx-form>
       <br />
       <dx-button text="Register" type="success" validationGroup="customerData" [useSubmitBehavior]="true">
