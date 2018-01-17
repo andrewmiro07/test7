@@ -1,16 +1,9 @@
-import { NgModule, Component, enableProdMode, OnInit, ViewChild, Pipe, PipeTransform } from '@angular/core';
+import { NgModule, Component, enableProdMode, OnInit, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { DataService, MenuSections, User, Employee, Address } from './data.service';
-import { DxDataGridModule, DxTabsModule, DxSelectBoxModule, DxCheckBoxModule, DxNumberBoxModule, DxButtonModule, DxFormModule, DxFormComponent, DxProgressBarModule } from 'devextreme-angular';
+import { DataService, MenuSections, Form } from './data.service';
+import { DxDataGridModule } from 'devextreme-angular';
 import notify from 'devextreme/ui/notify';
-
-@Pipe({ name: 'time' })
-export class TimePipe implements PipeTransform {
-  transform(value: number): string {
-    return "00:00:" + ("0" + value).slice(-2);
-  }
-}
 
 if (!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -23,13 +16,13 @@ if (!/localhost/.test(document.location.host)) {
 })
 
 @NgModule({
-  imports: [BrowserModule, DxDataGridModule, DxSelectBoxModule, DxCheckBoxModule, DxNumberBoxModule, DxButtonModule, DxFormModule, DxFormComponent, DxProgressBarModule],
-  declarations: [AppComponent, TimePipe],
+  imports: [BrowserModule, DxDataGridModule],
+  declarations: [AppComponent],
   bootstrap: [AppComponent]
 })
 
 export class AppComponent implements OnInit {
-  @ViewChild(DxFormComponent) form: DxFormComponent
+  //@ViewChild(DxFormComponent) form: DxFormComponent
   title = 'app';
   _counter: number;
   someProperty = '';
@@ -40,30 +33,30 @@ export class AppComponent implements OnInit {
   tabContent: string;
   tabId: number = 0;
   tbbClass: string = '';
-  password = "";
-  passwordOptions: any = {mode: "password", value: this.password};
-  user: User;
-  employee: Employee;
-  address: Address;
+  CredentialsForm: Form[];
+  PersonalDataForm: Form[];
+  AddressForm: Form[];
   countries: string[];
   maxDate: Date = new Date();
+  
   cityPattern = "^[^0-9]+$";
   namePattern: any = /^[^0-9]+$/;
-  phonePattern: any = /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/;
+  phonePattern: any = /^\+\s*7\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/;
   phoneRules: any = {X: /[02-9]/}
   buttonText = "Start progress";
   inProgress = false;
-  seconds = 10;
   maxValue = 10;
   intervalId: number;
+  password = "";
+  passwordOptions: any = {mode: "password", value: this.password};
 
   constructor(private dataService: DataService) {
     this.customers = this.dataService.getCustomers();
     this.maxDate = new Date(this.maxDate.setFullYear(this.maxDate.getFullYear() - 21));
     this.countries = dataService.getCountries();
-    this.user = dataService.getUser();
-    this.employee = dataService.getEmployee();
-    this.address = dataService.getAddress();
+    this.CredentialsForm = dataService.getLogonForm();
+    this.PersonalDataForm = dataService.getPersonalDataForm();
+    this.AddressForm = dataService.getAddressForm();
   }
 
 setCounter(num: number) {
@@ -115,9 +108,18 @@ settabclass(num: number){
     } 
   }
 
-  passwordComparison = () => {
+  AnswerController($scope){
+    $scope.save = function (answer, answerForm){
+        if(answerForm.$valid){
+            // действия по сохранению
+            alert(answer.author + ", ваш ответ сохранен");
+        }
+    };
+  }
+
+ /* passwordComparison = () => {
     return this.form.instance.option("formData").Password;
-  };
+  };*/
 
   checkComparison() {
     return true;
@@ -138,34 +140,5 @@ settabclass(num: number){
     }
     e.preventDefault();
     this.setCounter(parseInt(this.act_tabIndex) + 1);
-  }
-
-  onButtonClick() {
-    if (this.inProgress) {
-      this.buttonText = "Continue progress";
-      clearInterval(this.intervalId);
-    } else {
-      this.buttonText = "Stop progress";
-
-      if (this.seconds === 0) {
-        this.seconds = 10;
-      }
-      this.intervalId = window.setInterval(() => this.timer(), 1000);
-    }
-    this.inProgress = !this.inProgress;
-  }
-
-  timer() {
-    this.seconds--;
-    if (this.seconds == 0) {
-      this.buttonText = "Restart progress";
-      this.inProgress = !this.inProgress;
-      clearInterval(this.intervalId);
-      return;
-    }
-  }
-
-  format(value) {
-    return 'Loading: ' + value * 100 + '%';
   }
 }

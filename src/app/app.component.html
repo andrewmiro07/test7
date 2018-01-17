@@ -1,18 +1,58 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class ="triangle_tr"></div>
-<div align="center" class="border: 1px solid #111">
-  <div style="display: inline" *ngFor='let tab of sections'><!-- 
-  --><div id={{tab.tab_id}} class={{tab.tab_class}} (click)="setCounter(tab.tab_id)">
-        <div style="margin: 15px;">{{tab.tab_name}}</div>
-    </div><!-- 
---></div>
-</div>
-<br>
-<br>
-<dx-data-grid *ngIf="3==act_tabIndex" id="gridContainer" [dataSource]="customers" [columns]="['CompanyName', 'City', 'State', 'Phone', 'Fax']">
-</dx-data-grid>
+<!doctype html>
+<html ng-app="myApp">
 
-<form *ngIf="0==act_tabIndex" action="your-action" (submit)="onFormSubmit($event)">
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <div align="center" class="border: 1px solid #111">
+    <div style="display: inline" *ngFor='let tab of sections'><!-- 
+  --><div id={{tab.tab_id}} class={{tab.tab_class}} (click)="setCounter(tab.tab_id)">
+        <div style="margin: 5px;">{{tab.tab_name}}</div>
+      </div><!-- 
+--></div>
+  </div>
+  <br>
+  <br>
+
+  <form action="your-action" (submit)="onFormSubmit($event)" name="MyForm">
+    <div *ngIf="0==act_tabIndex">
+      <table>
+        <tr *ngFor='let inp of CredentialsForm'>
+          <td>{{inp.label}}
+            <td><input type={{inp.type}} name={{inp.name}} required>
+        </tr>
+      </table>
+    </div>
+    <div *ngIf="1==act_tabIndex">
+      <table>
+        <tr *ngFor='let inp of PersonalDataForm'>
+          <td>{{inp.label}}
+            <td><input type={{inp.type}} name={{inp.name}} ng-model={{inp.name}} required ng-pattern={{inp.pattern}}>
+        </tr>
+      </table>
+    </div>
+    <div *ngIf="2==act_tabIndex">
+      <table>
+        <tr *ngFor='let inp of AddressForm'>
+          <td>{{inp.label}}
+            <td><input type={{inp.type}} name={{inp.name}} required>
+        </tr>
+      </table>
+    </div>
+    <div *ngIf="3==act_tabIndex">
+      <dx-data-grid id="gridContainer" [dataSource]="customers" [columns]="['CompanyName', 'City', 'State', 'Phone', 'Fax']">
+      </dx-data-grid>
+    </div>
+    <div *ngIf="2>=act_tabIndex">
+      <br>
+      <input type="submit" value="Далее">
+    </div>
+  </form>
+
+  <!--form *ngIf="0==act_tabIndex" action="your-action" (submit)="onFormSubmit($event)">
   <dx-form id="form" [formData]="user" [readOnly]="false" [showColonAfterLabel]="true" [showValidationSummary]="true" validationGroup="customerData">
     <dxi-item itemType="group" caption="Credentials">
       <dxi-item dataField="Login">
@@ -105,9 +145,9 @@
       <br />
       <dx-button text="Register" type="success" validationGroup="customerData" [useSubmitBehavior]="true">
       </dx-button>
-    </form>
+    </form-->
 
-<!--div *ngIf="1==textValue" class="form">
+  <!--div *ngIf="1==textValue" class="form">
   <dx-button id="progress-button" [(text)]="buttonText" (onClick)="onButtonClick()" [width]="200">
   </dx-button>
   <div class="progress-info">
@@ -117,3 +157,6 @@
     [max]="maxValue" [statusFormat]="format" [value]="maxValue - seconds">
   </dx-progress-bar>
 </div-->
+</body>
+
+</html>

@@ -3,9 +3,21 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class DataService {
   menuTabs: MenuSections[] = [new MenuSections('Credentials', 0, 'tab'),
-  new MenuSections('Personal Data', 1, 'tab'),
-  new MenuSections('Billing address', 2, 'tab'),
-  new MenuSections('Users', 3, 'tab')];
+                              new MenuSections('Personal Data', 1, 'tab'),
+                              new MenuSections('Billing address', 2, 'tab'),
+                              new MenuSections('Users', 3, 'tab')];
+
+  Credentials_Form: Form[] = [new Form('login', "text", "", "Login"),
+                              new Form('password1', "password", "", "Password"),
+                              new Form('password2', "password", "", "Confirm Password")];
+
+  PersonalData_Form: Form[] = [new Form('name', "text", "/^[^0-9]+$/", "Name"),
+                               new Form('date', "date", "", "Date of birth")];
+
+  Address_Form: Form[] = [new Form('country', "text", "", "Country"),
+                          new Form('city', "text", "^[^0-9]+$", "City"),
+                          new Form('address', "text", "", "Address"),
+                          new Form('phone', "text", "^\+\s*7\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$", "Phone")];
 
   constructor() { }
 
@@ -13,20 +25,20 @@ export class DataService {
     return this.menuTabs;
   }
 
+  getLogonForm(): Form[] {
+    return this.Credentials_Form;
+  }
+  
+  getPersonalDataForm(): Form[] {
+    return this.PersonalData_Form;
+  }
+
+  getAddressForm(): Form[] {
+    return this.Address_Form;
+  }
+
   getCustomers() {
     return customers;
-  }
-
-  getUser(): User {
-    return user;
-  }
-
-  getEmployee(): Employee {
-    return employee;
-  }
-
-  getAddress(): Address {
-    return address;
   }
 
   getCountries() {
@@ -45,6 +57,19 @@ export class MenuSections {
   }
 }
 
+export class Form {
+  name: string;
+  type: string;
+  pattern: string;
+  label: string;
+  constructor(name: string, type: string, pattern: string, label: string) {
+    this.name = name;
+    this.type = type;
+    this.pattern = pattern;
+    this.label = label;
+  }
+}
+
 export class Customer {
   ID: number;
   CompanyName: string;
@@ -55,26 +80,6 @@ export class Customer {
   Phone: string;
   Fax: string;
   Website: string;
-}
-
-export class User {
-  Login: string;
-  Password: string;
-  Accepted: boolean;
-}
-
-export class Employee {
-  Name: string;
-  Date: Date;
-  Accepted: boolean;
-}
-
-export class Address {
-  Country: string;
-  City: string;
-  Address: string;
-  Phone: string;
-  Accepted: boolean;
 }
 
 let customers: Customer[] = [{
@@ -198,26 +203,6 @@ let customers: Customer[] = [{
   "Fax": "(800) 445-6938",
   "Website": "http://www.nowebsitescreenshop.com"
 }];
-
-let user: User = {
-  "Login": "",
-  "Password": "",
-  "Accepted": false
-};
-
-let employee: Employee = {
-  "Name": "Peter",
-  "Date": null,
-  "Accepted": false
-}
-
-let address: Address = {
-  "Country": "",
-  "City": "",
-  "Address": "",
-  "Phone": "",
-  "Accepted": false
-}
 
 let countries: string[] = [
   'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'The   Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burma', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Cape Verde', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Democratic Republic of the Congo', 'Republic of the Congo', 'Costa Rica', 'Ivory Coast', 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'East Timor', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'The Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Republic of Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'North Korea', 'South Korea', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Republic of Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico', 'Federated States of Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Namibia', 'Nauru', 'Nepal', 'Kingdom of the Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Norway', 'Oman', 'Pakistan', 'Palau', 'State of Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino', 'São Tomé and Príncipe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'];
