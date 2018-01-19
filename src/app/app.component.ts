@@ -4,6 +4,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { DataService, MenuSections, Form } from './data.service';
 import { DxDataGridModule } from 'devextreme-angular';
 import notify from 'devextreme/ui/notify';
+import { Console } from '@angular/core/src/console';
+import {FormsModule} from '@angular/forms';
 
 if (!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -16,7 +18,7 @@ if (!/localhost/.test(document.location.host)) {
 })
 
 @NgModule({
-  imports: [BrowserModule, DxDataGridModule],
+  imports: [BrowserModule, DxDataGridModule, FormsModule],
   declarations: [AppComponent],
   bootstrap: [AppComponent]
 })
@@ -34,8 +36,15 @@ export class AppComponent implements OnInit {
   tabId: number = 0;
   tbbClass: string = '';
   CredentialsForm: Form[];
+  CrdntlFormStatus: boolean;
+  country: string[] = ["0", "0", "0"];
+  countryModelChange(value: string[]) {
+    this.country = value;
+  }
   PersonalDataForm: Form[];
+  PrsnlDtFormStatus: boolean;
   AddressForm: Form[];
+  AddrssFormStatus: boolean;
   countries: string[];
   maxDate: Date = new Date();
   
@@ -126,7 +135,10 @@ settabclass(num: number){
   }
 
   onFormSubmit = function (e) {
-    if (parseInt(this.act_tabIndex) == 2){
+  console.log(this.country);
+  console.log(e);
+  e.preventDefault();
+  /*  if (parseInt(this.act_tabIndex) == 2){
     notify({
       message: "You have submitted the form",
       position: {
@@ -138,7 +150,7 @@ settabclass(num: number){
     if (parseInt(this.act_tabIndex) != this.sections.length - 1){
       this.sections[parseInt(this.act_tabIndex) + 1].tab_class = this.sections[parseInt(this.act_tabIndex) + 1].tab_class.replace("tab_disable", "");
     }
-    e.preventDefault();
-    this.setCounter(parseInt(this.act_tabIndex) + 1);
+    
+    this.setCounter(parseInt(this.act_tabIndex) + 1);*/
   }
 }

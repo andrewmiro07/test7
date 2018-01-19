@@ -1,12 +1,4 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<!doctype html>
-<html ng-app="myApp">
-
-<head>
-  <meta charset="utf-8">
-</head>
-
-<body>
   <div align="center" class="border: 1px solid #111">
     <div style="display: inline" *ngFor='let tab of sections'><!-- 
   --><div id={{tab.tab_id}} class={{tab.tab_class}} (click)="setCounter(tab.tab_id)">
@@ -16,41 +8,41 @@
   </div>
   <br>
   <br>
-
-  <form action="your-action" (submit)="onFormSubmit($event)" name="MyForm">
-    <div *ngIf="0==act_tabIndex">
+<div align="center" [ngSwitch]="act_tabIndex">
+        <form *ngSwitchCase="0" #ComparePasswd="ngForm" (ngSubmit)="onFormSubmit($event)">
+          <!--div ngModelGroup="passwd" (ngModelChange)="countryModelChange($event)"-->
       <table>
-        <tr *ngFor='let inp of CredentialsForm'>
-          <td>{{inp.label}}
-            <td><input type={{inp.type}} name={{inp.name}} required>
+        <tr>
+          <td align="right">{{CredentialsForm.label}}
+          <td><input type="text" value="Login" ngModel required>
         </tr>
       </table>
-    </div>
-    <div *ngIf="1==act_tabIndex">
+          <!--/div-->
+          <br>
+          <button>Continue</button>
+    </form>
+    <pre>{{country}}</pre>
+    <form *ngSwitchCase="1" action="your-action" (submit)="onFormSubmit($event)" name="PersonalDataForm">
       <table>
         <tr *ngFor='let inp of PersonalDataForm'>
-          <td>{{inp.label}}
-            <td><input type={{inp.type}} name={{inp.name}} ng-model={{inp.name}} required ng-pattern={{inp.pattern}}>
+          <td align="right">{{inp.label}}
+            <td><input type={{inp.type}} name={{inp.name}} ng-model="inp.name" required>
         </tr>
       </table>
-    </div>
-    <div *ngIf="2==act_tabIndex">
+    </form>
+    <form *ngSwitchCase="2" action="your-action" (submit)="onFormSubmit($event)" name="AddressForm">
       <table>
         <tr *ngFor='let inp of AddressForm'>
-          <td>{{inp.label}}
+          <td align="right">{{inp.label}}
             <td><input type={{inp.type}} name={{inp.name}} required>
         </tr>
       </table>
-    </div>
-    <div *ngIf="3==act_tabIndex">
+    </form>
+    <div *ngSwitchDefault>
       <dx-data-grid id="gridContainer" [dataSource]="customers" [columns]="['CompanyName', 'City', 'State', 'Phone', 'Fax']">
       </dx-data-grid>
     </div>
-    <div *ngIf="2>=act_tabIndex">
-      <br>
-      <input type="submit" value="Далее">
-    </div>
-  </form>
+</div>
 
   <!--form *ngIf="0==act_tabIndex" action="your-action" (submit)="onFormSubmit($event)">
   <dx-form id="form" [formData]="user" [readOnly]="false" [showColonAfterLabel]="true" [showValidationSummary]="true" validationGroup="customerData">
@@ -157,6 +149,3 @@
     [max]="maxValue" [statusFormat]="format" [value]="maxValue - seconds">
   </dx-progress-bar>
 </div-->
-</body>
-
-</html>

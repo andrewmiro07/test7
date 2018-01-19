@@ -111,6 +111,5 @@
     border-left: 15px solid #fff;
   }
   .tab_disable{
-    pointer-events: none;
     background-color: #EEE;
   }
